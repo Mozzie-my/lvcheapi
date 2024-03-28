@@ -11,7 +11,7 @@ namespace XlcToolBox.Services
         private readonly string jaw_uid = "";
         public TbService() {
             url = AppSetting.Configuration["tb:url"];
-            url = AppSetting.Configuration["tb:jaw_uid"];
+            jaw_uid = AppSetting.Configuration["tb:jaw_uid"];
         }
         public string Trans(string token)
         {
@@ -19,7 +19,7 @@ namespace XlcToolBox.Services
                 {
                     { "content", token },
                     { "link_type", "18" },
-                    { "jaw_uid", "8PZS4otmnZVowdKgthgSfNajG9rbtTmtf5q_7vf0j1r5nVoNdwO_EOBk5rayNSjFLLz8rcj_N9a5ZiWg1n-ARCU6V-ZLhxAocvyjFuvev07bhY6hMMuWbbf42_HT3t4sKdNM26uCYWFnQaxdnUYaTkiHfjYTQqVfLy3Xmg2HOQc" },
+                    { "jaw_uid", jaw_uid},
                 });
             var res = sendPostAsync(url, param);
             return res.Result.ToString();
@@ -30,7 +30,7 @@ namespace XlcToolBox.Services
             {
                 { "content", token },
                 { "link_type", "20" },
-                { "jaw_uid", "8PZS4otmnZVowdKgthgSfNajG9rbtTmtf5q_7vf0j1qLusS4MGXOgI8zhKeVzwnbepJHUEUXWxzcoHQvG29sx14jWzr1qSQr4mClnRvlzS34KOtG845KFz3wVewJuOML-64DyA4ROBOWmF3C6LlMp1zF4lC1-CYNwFqpQ6rKcew" },
+                { "jaw_uid",  jaw_uid},
             });
             var res = sendPostAsync("https://dtkapi.ffquan.cn/taobaoapi/pwd-analysis", param);
             return res.Result.ToString();
