@@ -8,8 +8,10 @@ namespace XlcToolBox.Services
     public class TbService : ITbService
     {
         private readonly string url="";
+        private readonly string jaw_uid = "";
         public TbService() {
             url = AppSetting.Configuration["tb:url"];
+            url = AppSetting.Configuration["tb:jaw_uid"];
         }
         public string Trans(string token)
         {

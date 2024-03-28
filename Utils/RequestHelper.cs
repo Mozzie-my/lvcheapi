@@ -179,5 +179,47 @@ namespace XlcToolBox.Utils
             /// </summary>
             public AsyRequetCallback callback { get; set; }
         }
+
+        public static async  Task<string> GetAsync(string url, object queryParams)
+        {
+            // 构建 URL 字符串
+            string fullUrl = url + ToQueryString(queryParams);
+
+            // 创建 HttpClient 实例
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    // 发送 GET 请求并等待响应
+                    HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+                    // 确保请求成功
+                    response.EnsureSuccessStatusCode();
+
+                    // 读取响应内容并打印
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("Response:");
+                    Console.WriteLine(responseBody);
+                    return responseBody;
+                }
+                catch (HttpRequestException e)
+                {
+                    Console.WriteLine($"Request failed: {e.Message}");
+                    return null;
+                }
+            }
+        }
+
+        // 将参数对象转换为查询字符串
+        static string ToQueryString(object queryParams)
+        {
+            if (queryParams == null) return string.Empty;
+
+            var properties = queryParams.GetType().GetProperties();
+            if (properties.Length == 0) return string.Empty;
+
+            var queryString = string.Join("&", properties.Select(p => $"{p.Name}={Uri.EscapeDataString(p.GetValue(queryParams)?.ToString())}"));
+            return "?" + queryString;
+        }
     }
 }
